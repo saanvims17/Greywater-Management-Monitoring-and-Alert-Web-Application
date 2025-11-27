@@ -5,7 +5,7 @@ Project is Built using Flask,Firebase Realtime Database,and Twilio to simulate p
 <img width="1467" height="793" alt="Screenshot 2025-11-27 at 12 12 46 PM" src="https://github.com/user-attachments/assets/8bfd069f-846e-4acd-86bc-b87d58b816b2" />
 
 
-
+# Working of the Project 
 
 **Simulates sensor data**
 
