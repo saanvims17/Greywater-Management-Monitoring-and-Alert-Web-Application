@@ -1,0 +1,2 @@
+# Greywater-Management-Monitoring-and-Alert-Web-Application
+Project is Built using Flask,Firebase Realtime Database,and Twilio to simulate pH and water-level readings and store them as entries. Developed a live monitoring dashboard and implemented automated WhatsApp alerts when threshold limits are exceeded. Skills Used: Python,Flask,Firebase Realtime Database,Twilio WhatsApp API,HTML,CSS,JavaScript
