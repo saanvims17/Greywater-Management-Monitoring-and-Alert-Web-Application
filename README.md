@@ -103,3 +103,75 @@ Config & Secrets Management: .env with python-dotenv
 
 Monitoring UI: HTML templates (index.html, product.html, monitoring.html) consuming Firebase data
 
+                         ┌───────────────────────────┐
+                         │        User / Admin       │
+                         │  (opens website in browser) 
+                         └─────────────┬─────────────┘
+                                       │  HTTP
+                                       ▼
+                         ┌───────────────────────────┐
+                         │        Flask App          │
+                         │  (Python backend server)  │
+                         ├─────────────┬─────────────┤
+                         │ Routes:     │             │
+                         │   /         │ index.html  │
+                         │   /product  │ product.html│
+                         │   /about    │ about.html  │
+                         │   /monitoring (dashboard) │
+                         │   /simulate (manual test) │
+                         │   /generator/start|stop   │
+                         └─────────────┬─────────────┘
+                                       │
+                        App config, .env│ (keys, safe ranges)
+                                       ▼
+                       ┌────────────────────────────┐
+                       │  Sensor Generator Thread   │
+                       │  (background Python loop)  │
+                       ├────────────────────────────┤
+                       │ - Generates random pH      │
+                       │   and water_level values   │
+                       │ - Computes status:         │
+                       │     OK / WARNING / CRITICAL│
+                       │ - Stores reading in        │
+                       │   Firebase Realtime DB     │
+                       │ - Calls alert logic        │
+                       └─────────────┬──────────────┘
+                                     │
+                     write readings  │  REST / SDK
+                                     ▼
+                    ┌────────────────────────────────┐
+                    │   Firebase Realtime Database    │
+                    │   node: /sensor_readings        │
+                    │  { timestamp, pH, water_level,  │
+                    │    status, epoch_time }         │
+                    └────────────────┬────────────────┘
+                                     │
+                    read data (JS)   │
+                                     ▼
+                    ┌────────────────────────────────┐
+                    │   Monitoring Dashboard (HTML/JS)│
+                    │   - Uses Firebase REST API      │
+                    │   - Shows latest reading, status│
+                    │   - Can visualize trends        │
+                    └────────────────┬────────────────┘
+                                     │
+                                     │ triggers alerts
+                                     ▼
+                     ┌────────────────────────────────┐
+                     │    Alert Logic (Flask backend) │
+                     │  - Checks transitions:         │
+                     │      OK→WARNING/CRITICAL       │
+                     │      WARNING→CRITICAL          │
+                     │  - Enforces:                   │
+                     │      min time between alerts   │
+                     │      max alerts per day        │
+                     └────────────────┬───────────────┘
+                                      │
+                                      │ WhatsApp API call
+                                      ▼
+                         ┌──────────────────────────────┐
+                         │        Twilio API            │
+                         │      (WhatsApp Sender)       │
+                         └──────────────────────────────┘
+
+
