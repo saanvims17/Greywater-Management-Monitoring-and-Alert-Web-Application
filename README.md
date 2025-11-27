@@ -1,13 +1,13 @@
 # Greywater-Management-Monitoring-and-Alert-Web-Application
 Project is Built using Flask,Firebase Realtime Database,and Twilio to simulate pH and water-level readings and store them as entries. Developed a live monitoring dashboard and implemented automated WhatsApp alerts when threshold limits are exceeded. Skills Used: Python,Flask,Firebase Realtime Database,Twilio WhatsApp API,HTML,CSS,JavaScript
 
-# Simulates sensor data
+**Simulates sensor data**
 
-# Randomly generates:
+**Randomly generates:**
 pH (5.0–9.5)
 water_level (5–95%)
 
-# Classifies each reading as:
+**Classifies each reading as:**
 OK
 WARNING
 CRITICAL
@@ -21,7 +21,7 @@ pH
 water_level
 status
 
-# Sends WhatsApp alerts via Twilio
+**Sends WhatsApp alerts via Twilio**
 Sends alerts only when:
 status transitions from:
 OK → WARNING or OK → CRITICAL
@@ -30,7 +30,7 @@ AND:
 at least ALERT_MIN_INTERVAL_SEC seconds have passed
 daily alerts < ALERTS_PER_DAY_LIMIT
 
-# Message includes:
+**Message includes:**
 Time
 pH
 Water level
@@ -42,10 +42,19 @@ runs generator_loop() in a background thread
 periodically generates readings every GENERATOR_INTERVAL_SEC seconds
 stores them + triggers alerts if needed
 
-# Exposes web routes
+**Exposes web routes**
 / → index.html
 /product → product.html
 /about → about.html
 /monitoring → monitoring dashboard (passes safe ranges + Firebase URL to frontend)
 /simulate → manually trigger one reading (for testing)
 /generator/start & /generator/stop → control background data generation via API
+
+**Tech Stack**
+Backend: Flask (Python)
+Database: Firebase Realtime Database
+Background Processing: Python threads for continuous sensor simulation
+Alerts & Notifications: Twilio WhatsApp API with throttling and daily caps
+Cloud Integration: Firebase Admin SDK for real-time data storage
+Config & Secrets Management: .env with python-dotenv
+Monitoring UI: HTML templates (index.html, product.html, monitoring.html) consuming Firebase data
